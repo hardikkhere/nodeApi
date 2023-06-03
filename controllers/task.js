@@ -2,22 +2,26 @@ import ErrorHandler from "../middleware/error.js";
 import { Task } from "../models/taskModel.js";
 
 export const newTask = async (req, res, next) => {
-  const { title, description } = req.body;
+  try {
+    const { title, description } = req.body;
 
-  // 1st METHOD TO CREATE NEW TASK
-  //   const task = new Task({ title, description });
-  //   task.save();
+    // 1st METHOD TO CREATE NEW TASK
+    //   const task = new Task({ title, description });
+    //   task.save();
 
-  await Task.create({
-    title,
-    description,
-    user: req.user,
-  });
+    await Task.create({
+      title,
+      description,
+      user: req.user,
+    });
 
-  res.status(201).json({
-    success: true,
-    message: "Task added successfully",
-  });
+    res.status(201).json({
+      success: true,
+      message: "Task added successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getMyTask = async (req, res, next) => {
