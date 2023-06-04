@@ -9,7 +9,7 @@ import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/new", newTask);
+router.post("/new", isAuthenticated, newTask);
 
 router.get("/my", isAuthenticated, getMyTask);
 

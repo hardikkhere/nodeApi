@@ -61,6 +61,6 @@ export const logout = (req, res) => {
     })
     .json({
       success: true,
-      message: "Logged out",
+      user: req.user,
     });
 };

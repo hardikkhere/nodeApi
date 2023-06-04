@@ -1,13 +1,9 @@
 import ErrorHandler from "../middleware/error.js";
 import { Task } from "../models/taskModel.js";
 
-export const newTask = async (req, res, next) => {
+export const createTask = async (req, res, next) => {
   try {
     const { title, description } = req.body;
-
-    // 1st METHOD TO CREATE NEW TASK
-    //   const task = new Task({ title, description });
-    //   task.save();
 
     await Task.create({
       title,
