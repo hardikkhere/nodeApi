@@ -30,12 +30,6 @@ export const getMyTask = async (req, res, next) => {
 
     const tasks = await Task.find({ user: userId });
 
-    if (!tasks)
-      return res.json({
-        success: false,
-        message: "Task not found",
-      });
-
     res.status(200).json({
       success: true,
       tasks,
@@ -73,8 +67,8 @@ export const deleteTask = async (req, res, next) => {
     await task.deleteOne();
 
     res.status(200).json({
-      success: true,
       message: "Task deleted",
+      success: true,
     });
   } catch (error) {
     next(error);

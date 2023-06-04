@@ -7,14 +7,14 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    let user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+password");
 
     if (!user) return next(new ErrorHandler("Invalid Email or Password", 404));
 
     const verifyPass = await bcrypt.compare(password, user.password);
 
     if (!verifyPass)
-      return next(new ErrorHandler("Invalid Email or Password", 404));
+      return next(new ErrorHandler("Invalid Email or Password", 400));
 
     sendCookie(user, res, `Welcome back ${user.name}`, 200);
   } catch (error) {
@@ -28,7 +28,7 @@ export const register = async (req, res, next) => {
 
     let user = await User.findOne({ email });
 
-    if (user) return next(new ErrorHandler("User Already Exist...!", 404));
+    if (user) return next(new ErrorHandler("User Already Exist...!", 400));
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
